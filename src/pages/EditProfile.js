@@ -1,20 +1,16 @@
 /**
- * * ZADATAK:
- *
- * 1. Kreirati stranicu EditProfile
- *
+ * * ZADATAK: *
+ * 1. Kreirati stranicu EditProfile *
  * 2. U toj stranici kreirati formu koja sadrzi sledeca polja:
  *    - Name & Surname
  *    - Email
  *    - Phone
- *    - Pol (Musko/Zensko)
- *
+ *    - Pol (Musko/Zensko) *
  * 3. Kada korisnik unese podatke i klikne na dugme SAVE
- *    potrebno je podatke prikazati ispod forme u fromatu:
- *
+ *    potrebno je podatke prikazati ispod forme u fromatu: *
  *    Name: --------
  *    Email: --------
- *    Phone: --------
+ *    Phone: -------
  *
  * 4. Stranica za Edit profila treba da bude protected i da
  *    korisnici koji nisu logovani u aplikaciju ne mogu da
@@ -31,8 +27,12 @@ const EditProfile = ({ onSave }) => {
     phone: "",
     gender: "male",
   });
+  /*   početno stanje
+userData - čuva trenutne info koje unosimo
+ */
 
   const [savedData, setSavedData] = useState(null);
+  /*   savedData- čuva podatke nakon unosa */
 
   const handleChange = (event) => {
     const fieldName = event.target.name;
@@ -43,11 +43,12 @@ const EditProfile = ({ onSave }) => {
     }));
   };
 
+  /* poziva se kada user promeni value u nekom od input polja - ažurira mi userData. */
+
   const handleSave = () => {
     onSave(userData);
     // stanje za prikaz podataka
     setSavedData(userData);
-    // Resetuje stanje
     setUserData({
       name: "",
       surname: "",
@@ -56,7 +57,11 @@ const EditProfile = ({ onSave }) => {
       gender: "male",
     });
   };
-
+  /*   Ova funkcija dakle handleSave, se poziva na dugme "Save".
+  Poziva onSave sa trenutnim podacima pa
+  postavlja savedData stanje na trenutne podatke i na kraju resetuje formu za novi unos.
+  NAPOMENA ZA SEBE: onSave -funkcija prima podatke korisnika, roditeljska komponenta prosleđuje funkciju!
+ */
   return (
     <div className="instagram">
       <form className="editForm">
@@ -83,7 +88,7 @@ const EditProfile = ({ onSave }) => {
         <div>
           <label className="col-35">Email:</label>
           <input
-            type="text"
+            type="email"
             name="email"
             className="col-65"
             value={userData.email}
@@ -93,7 +98,7 @@ const EditProfile = ({ onSave }) => {
         <div>
           <label className="col-35">Phone:</label>
           <input
-            type="text"
+            type="number"
             name="phone"
             className="col-65"
             value={userData.phone}
@@ -118,7 +123,7 @@ const EditProfile = ({ onSave }) => {
         <span className="col-65"></span>
       </form>
 
-      {/* Prikaz podataka samo nakon klika na Save */}
+      {/*       Prikaz podataka samo nakon klika na Save  */}
       {savedData && (
         <div className="showData">
           <p>Name: {savedData.name}</p>

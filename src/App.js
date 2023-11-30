@@ -14,7 +14,10 @@ function App() {
   const handleSave = (userData) => {
     console.log("Podaci su sačuvani:", userData);
   };
+  /*   Ova funkcija je prop u EditProfile komponenti i prosleđuje se onSave.
+Kada korisnik pritisne Save, ova funkcija se poziva i ispisuje info u konzoli, tako sam krenula */
   const [user, setUser] = useState(null);
+  /*  user -čuva informacije o trenutnom useru. */
 
   const onLogin = (userData) => {
     console.log("okinuto dugme");
@@ -23,7 +26,8 @@ function App() {
       email: userData.email,
     });
   };
-
+  /*   onLogin funkcija - kao prop u komponenti (EditProfile) i prosleđuje se kao onSave funkcija.
+  Kada korisnik unese podatke u formu i pritisne Save, onSave f-ja u EditProfile poziva onLogin funkciju ove komponente i postavlja user stanje sa imenom i emailom koji su dobijeni iz userData. */
   return (
     <div style={styles.appContainer}>
       <BrowserRouter>
@@ -45,7 +49,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/*   <Route path="edit" element={<EditProfile onSave={handleSave} />} /> */}
+
             <Route
               path="edit"
               element={
