@@ -1,25 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
+import Layout from "./pages/Layout";
+import NotFound from "./pages/NotFound";
+import LoginPage from "./pages/LoginPage";
+import { useState } from "react";
+import ProtectedRoute from "./components/PotectedRoute";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
+  const handleSave = (userData) => {
+    console.log("Podaci su sačuvani:", userData);
+  };
+  const [user, setUser] = useState(null);
+
+  const onLogin = (userData) => {
+    console.log("okinuto dugme");
+    setUser({
+      name: userData.name,
+      email: userData.email,
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={styles.appContainer}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout user={user} />}>
+            <Route
+              index
+              element={
+                <ProtectedRoute user={user}>
+                  <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute user={user}>
+                  <ProfilePage user={user} />
+                </ProtectedRoute>
+              }
+            />
+            {/*   <Route path="edit" element={<EditProfile onSave={handleSave} />} /> */}
+            <Route
+              path="edit"
+              element={
+                <ProtectedRoute user={user}>
+                  <EditProfile onSave={handleSave} />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />}></Route>
+            <Route
+              path="login"
+              element={<LoginPage onLogin={onLogin} />}
+            ></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
+
+const styles = {
+  appContainer: {
+    display: "flex",
+  },
+};
 
 export default App;
