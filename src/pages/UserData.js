@@ -4,7 +4,7 @@ function UserData() {
   const { user } = useUser();
 
   return (
-    <div className="userData">
+    <div className="userDataInfo">
       {user ? (
         <div>
           <h2>Welcome, {user.name}!</h2>
