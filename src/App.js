@@ -1,14 +1,14 @@
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import Layout from "./pages/Layout";
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
 import { useState } from "react";
-import ProtectedRoute from "./components/PotectedRoute";
 import EditProfile from "./pages/EditProfile";
+import UserData from "./pages/UserData";
+import { UserProvider } from "./UserContext";
 
 function App() {
   const handleSave = (userData) => {
@@ -16,11 +16,12 @@ function App() {
   };
   /*   Ova funkcija je prop u EditProfile komponenti i prosleđuje se onSave.
 Kada korisnik pritisne Save, ova funkcija se poziva i ispisuje info u konzoli, tako sam krenula */
+
   const [user, setUser] = useState(null);
   /*  user -čuva informacije o trenutnom useru. */
 
   const onLogin = (userData) => {
-    console.log("okinuto dugme");
+    console.log("Okinuto dugme");
     setUser({
       name: userData.name,
       email: userData.email,
@@ -28,44 +29,27 @@ Kada korisnik pritisne Save, ova funkcija se poziva i ispisuje info u konzoli, t
   };
   /*   onLogin funkcija - kao prop u komponenti (EditProfile) i prosleđuje se kao onSave funkcija.
   Kada korisnik unese podatke u formu i pritisne Save, onSave f-ja u EditProfile poziva onLogin funkciju ove komponente i postavlja user stanje sa imenom i emailom koji su dobijeni iz userData. */
+
   return (
     <div style={styles.appContainer}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout user={user} />}>
-            <Route
-              index
-              element={
-                <ProtectedRoute user={user}>
-                  <HomePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="profile"
-              element={
-                <ProtectedRoute user={user}>
-                  <ProfilePage user={user} />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="edit"
-              element={
-                <ProtectedRoute user={user}>
-                  <EditProfile onSave={handleSave} />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<NotFound />}></Route>
-            <Route
-              path="login"
-              element={<LoginPage onLogin={onLogin} />}
-            ></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserProvider value={{ user, setUser }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout user={user} />}>
+              <Route index element={<Navigate to="/home" />} />
+              <Route path="home" element={<HomePage />} />
+              <Route path="profile" element={<ProfilePage user={user} />} />
+              <Route
+                path="edit"
+                element={<EditProfile onSave={handleSave} />}
+              />
+              <Route path="userdata" element={<UserData />} />
+              <Route path="login" element={<LoginPage onLogin={onLogin} />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }

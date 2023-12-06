@@ -127,3 +127,9 @@ input {
   padding: 8px;
   margin: 20px;
 }
+.userData {
+  padding: 60px;
+}
+.userData h2 {
+  margin-bottom: 20px;
+}

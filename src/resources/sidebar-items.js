@@ -6,6 +6,7 @@ import {
   AiOutlineMessage,
   AiOutlineUser,
   AiOutlineEdit,
+  AiTwotoneDatabase,
 } from "react-icons/ai";
 
 export default [
@@ -43,5 +44,10 @@ export default [
     title: "Edit",
     icon: <AiOutlineEdit size={21} />,
     path: "edit",
+  },
+  {
+    title: "User Data",
+    icon: <AiTwotoneDatabase size={21} />,
+    path: "userdata",
   },
 ];

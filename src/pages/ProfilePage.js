@@ -1,4 +1,8 @@
 function ProfilePage({ user }) {
-  return <div>Ovo je profilna stranica</div>;
+  return (
+    <div>
+      <h1> Ovo je profilna stranica </h1>
+    </div>
+  );
 }
 export default ProfilePage;
