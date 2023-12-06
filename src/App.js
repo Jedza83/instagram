@@ -39,7 +39,7 @@ Kada korisnik pritisne Save, ova funkcija se poziva i ispisuje info u konzoli, t
             <Route path="/" element={<Layout user={user} />}>
               <Route index element={<Navigate to="/login" />} />
               <Route
-                path="/"
+                path="home"
                 element={
                   <ProtectedRoute user={user}>
                     <HomePage />

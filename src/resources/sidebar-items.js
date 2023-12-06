@@ -13,7 +13,7 @@ export default [
   {
     title: "Home",
     icon: <AiOutlineHome size={21} />,
-    path: "/",
+    path: "home",
   },
   {
     title: "Search",
