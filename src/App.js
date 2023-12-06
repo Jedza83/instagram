@@ -9,6 +9,7 @@ import { useState } from "react";
 import EditProfile from "./pages/EditProfile";
 import UserData from "./pages/UserData";
 import { UserProvider } from "./UserContext";
+import ProtectedRoute from "./components/PotectedRoute";
 
 function App() {
   const handleSave = (userData) => {
@@ -36,14 +37,39 @@ Kada korisnik pritisne Save, ova funkcija se poziva i ispisuje info u konzoli, t
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout user={user} />}>
-              <Route index element={<Navigate to="/home" />} />
-              <Route path="home" element={<HomePage />} />
-              <Route path="profile" element={<ProfilePage user={user} />} />
+              <Route index element={<Navigate to="/login" />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute user={user}>
+                    <HomePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute user={user}>
+                    <ProfilePage user={user} />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="edit"
-                element={<EditProfile onSave={handleSave} />}
+                element={
+                  <ProtectedRoute user={user}>
+                    <EditProfile onSave={handleSave} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="userdata" element={<UserData />} />
+              <Route
+                path="userdata"
+                element={
+                  <ProtectedRoute user={user}>
+                    <UserData />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="login" element={<LoginPage onLogin={onLogin} />} />
               <Route path="*" element={<NotFound />} />
             </Route>
